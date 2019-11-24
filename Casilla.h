@@ -37,8 +37,9 @@ private:
     int posicion;
     string nombre;
     int numero_de_casas;
+    bool hotel;
     long precio;
-    string propietario;
+    string propietario = " ";
     int ID_de_propietario;
 
 };

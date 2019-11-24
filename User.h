@@ -8,9 +8,10 @@
 #include <new>
 #include <cstring>
 #include <stdio.h>
+#include <vector>
 #include <string>
 #include "Casilla.h"
-
+#include "Carta_de_propiedad.h"
 using namespace std;
 
 class User {
@@ -25,12 +26,19 @@ public:
     void restar_Dinero_de_usuario(long n);
     void sumar_Dinero_de_usuario(long n);
     void suma_1000_por_pasar_el_inicio();
-    User(Casilla cas, string name);
+    bool puede_comprar();
+    void ya_puede_comprar();
+    void comprar_propieda(Carta_de_propiedad card);
+    int get_User_ID();
+    User(Casilla cas, string name, int ID);
 
 private:
     string nombre;
     Casilla lugar;
     long dinero = 2000;
+    bool compras = false;
+    vector <Carta_de_propiedad> mis_propiedades;
+    int ID;
 
 };
 

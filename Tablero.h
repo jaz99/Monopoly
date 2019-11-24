@@ -21,6 +21,8 @@ public:
     string get_color_de_Casilla(int numero_de_casilla);
     Casilla get_casilla(int i);
     void llenar_casillas();
+    void set_nombre_de_propietario(int n, string s);
+    void set_ID_de_propietario(int n, int p);
     Tablero();
 
 private:

@@ -14,7 +14,7 @@ void Juego::registrar_jugadores() {
     for (int i = 0; i < numero_de_jugadores  ; ++i) {
         cout << "Nombre del jugador " << (i+1) << endl;
         cin >> name;
-        User aux = User(tabla.get_casilla(0), name);
+        User aux = User(tabla.get_casilla(39), name, i);
         jugadores.push_back(aux);
     }
     cout<<"Registro exitoso" << endl;
@@ -31,6 +31,7 @@ void Juego::inicio() {
 
 Juego::Juego() {
     Cartas();
+    Cartas_de_propiedades();
     inicio();
     registrar_jugadores();
     juego();
@@ -38,11 +39,14 @@ Juego::Juego() {
 
 void Juego::juego() {
 
-    int d1, d2, casilla_nueva;
+    int contador = 0;
+    int d1, d2, casilla_nueva, estado_act;
     Casilla cas_aux;
+    string compra;
 
     while(1){
         for (int i = 0; i < numero_de_jugadores ; ++i) {
+
             cout << jugadores[i].get_nombre() << " con " << jugadores[i].get_Dinero_de_usuario() << " tira dados" << endl;
 
 
@@ -54,18 +58,38 @@ void Juego::juego() {
             casilla_nueva = (jugadores[i].get_estado_actual()).get_posicion() + (d1+d2);
 
 
+            ////////////////////////////////////////////////////////RESET DE TABLERO CUANDO YA SE DIO LA VUELTA////////////////////////////////////////
             //Validando la casilla que no se pase de 40
             //Si se pasa de 39 los manda a las primeras casillas.
             if(casilla_nueva > 39){
                 casilla_nueva = casilla_nueva - 40;
                 jugadores[i].suma_1000_por_pasar_el_inicio();
+                jugadores[i].ya_puede_comprar();
             }
             cas_aux = tabla.get_casilla((casilla_nueva));
-
-
             //Muestra el estado actual de los jugadores
             jugadores[i].set_estado_actual(cas_aux);
+            estado_act = jugadores[i].get_estado_actual().get_posicion();
 
+            ///////////////////////////////////////////////////////////COMPRAAAAASSSSSS////////////////////////////////////////////////////////////
+            if(jugadores[i].puede_comprar() == true && tabla.get_casilla(estado_act).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_act).get_Nombre_de_propietario() == "Ninguno"){
+
+            cout << "Deseas comprar la propiedad: " << (jugadores[i].get_estado_actual()).get_nombre() << " costo: $" << tabla.get_casilla(estado_act).get_precio_de_propiedad() << endl;
+            cout << "s " << "para comprar" << "n " << "para rechazar" << endl;
+            cin >> compra;
+            if(compra == "s" || compra == "s"){
+                jugadores[i].comprar_propieda(cartas_de_propiedades[jugadores[i].get_estado_actual().get_posicion()]);
+
+                cartas_de_propiedades[estado_act].set_nombre_de_propietario(jugadores[i].get_nombre());
+                cartas_de_propiedades[estado_act].set_ID_de_propietario(jugadores[i].get_User_ID());
+                tabla.set_nombre_de_propietario(estado_act, jugadores[i].get_nombre());
+                tabla.set_ID_de_propietario(estado_act, jugadores[i].get_User_ID());
+
+                cout << tabla.get_casilla(estado_act).get_Nombre_de_propietario() << tabla.get_casilla(estado_act).get_ID_de_propietario() << endl;
+            }
+            }
+
+            ///////////////////////////////////////////////////////////CARTAS CHANCE Y CARTAS COMUNITY CHEST//////////////////////////////////////
             if((jugadores[i].get_estado_actual()).get_posicion() == 7 || (jugadores[i].get_estado_actual()).get_posicion() == 22 || (jugadores[i].get_estado_actual()).get_posicion() == 36){
                 CHANCE(i);
             }
@@ -75,7 +99,7 @@ void Juego::juego() {
 
             cout << (jugadores[i].get_estado_actual()).get_nombre() << " " << (jugadores[i].get_estado_actual()).get_posicion() << endl;
             sleep(4);
-            //system("CLS");
+            contador++;
         }
     }
 
@@ -264,4 +288,24 @@ int Juego::Generar_numero_aleatorio_para_cartas(int inicio, int fin){
         std::uniform_int_distribution<> dis(0, 21);
         return dis(gen);
     }
+}
+
+void Juego::Cartas_de_propiedades() {
+ cout << "adasadd" << endl;
+
+ cartas_de_propiedades.reserve(28);
+
+    for (int i = 0; i < 40; ++i) {
+        //if((tabla.get_casilla(i)).get_precio_de_propiedad() != 0){
+            Carta_de_propiedad card_pro = Carta_de_propiedad(tabla.get_casilla(i).get_nombre(), tabla.get_casilla(i).get_color(), tabla.get_casilla(i).get_posicion(), tabla.get_casilla(i).get_precio_de_propiedad());
+            cartas_de_propiedades.push_back(card_pro);
+
+        //}
+    }
+
+    for (int j = 0; j < 28 ; ++j) {
+        cout << cartas_de_propiedades[j].get_nombre() << " " << cartas_de_propiedades[j].get_color() << " " << cartas_de_propiedades[j].get_precio_de_propiedad() << endl;
+    }
+
+
 }

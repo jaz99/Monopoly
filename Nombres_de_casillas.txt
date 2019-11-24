@@ -75,6 +75,6 @@ Chance
 Park Place
 350
 Luxury Tax
-75
-400
+0
 Boardwalk
+400

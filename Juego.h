@@ -14,6 +14,7 @@
 #include "User.h"
 #include "Tablero.h"
 #include "Carta.h"
+#include "Carta_de_propiedad.h"
 using namespace std;
 
 class Juego {
@@ -23,6 +24,7 @@ public:
     void registrar_jugadores();
     void juego();
     void Cartas();
+    void Cartas_de_propiedades();
     Juego();
     void CHANCE(int);
     void COMUNITY_CHEST(int);
@@ -31,9 +33,11 @@ public:
 private:
     vector<User> jugadores;
     vector<Carta> cartas;
+    vector <Carta_de_propiedad> cartas_de_propiedades;
     Tablero tabla;
     Dado dado1, dado2;
     int numero_de_jugadores;
+
 
 
 };

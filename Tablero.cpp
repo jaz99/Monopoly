@@ -40,11 +40,17 @@ void Tablero::llenar_casillas() {
     ///Colores
     for (int i = 0; i < 40 ; ++i) {
         s = "nombre";
-        if(i == 2 || i == 4 || i == 5 || i == 7 || i == 12 || i == 15 || i == 17 || i == 22 || i == 25 || i == 28 || i == 33 || i == 35 || i == 36 || i == 38){
-            casillas[i].set_color("sin_color");
+        if(i == 2 || i == 4 || i == 7 || i == 17 || i == 22 || i == 33 || i == 36 || i == 38){
+            casillas[i].set_color("sin_color(CHANCE,COMUNITY_CHEST)");
         }
-        if((i % 10) == 0 ){
+        if(i == 12 || i == 28){
             casillas[i].set_color("Blanco");
+        }
+        if(i == 5 || i == 15 || i == 25 || i == 35){
+            casillas[i].set_color("Negro");
+        }
+        if(((i % 10) == 0) || i == 0 ){
+            casillas[i].set_color("sin color");
         }
         if(i == 1 || i == 3){
             casillas[i].set_color("Morado");
@@ -85,4 +91,12 @@ Tablero::Tablero() {
 
 Casilla Tablero::get_casilla(int i) {
     return casillas[i];
+}
+
+void Tablero::set_nombre_de_propietario(int n, string s) {
+    casillas[n].set_Nombre_de_propietario(s);
+}
+
+void Tablero::set_ID_de_propietario(int n, int p) {
+    casillas[n].set_ID_de_propietario(p);
 }
