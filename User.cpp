@@ -23,7 +23,24 @@ void User::set_nombre(string name) {
 }
 
 
-User::User(Casilla cas) {
+User::User(Casilla cas, string name) {
     lugar.set_nombre(cas.get_nombre());
     lugar.set_posicion(cas.get_posicion());
+    this->nombre = name;
+}
+
+void User::restar_Dinero_de_usuario(long n) {
+    this->dinero = this->dinero + n;
+}
+
+long User::get_Dinero_de_usuario() {
+    return this->dinero;
+}
+
+void User::sumar_Dinero_de_usuario(long n) {
+    this->dinero = this->dinero + n;
+}
+
+void User::suma_1000_por_pasar_el_inicio() {
+    this->dinero = this->dinero + 1000;
 }

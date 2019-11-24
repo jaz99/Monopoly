@@ -2,7 +2,6 @@
 #include "Juego.h"
 
 int main() {
-    Juego game;
-    game.inicio();
+    Juego game = Juego();
     return 0;
 }

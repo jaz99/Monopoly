@@ -1,0 +1,109 @@
+#popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(50, 50, 50, .75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#popup [name="card"] {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-color: #eeeeee;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+#popup [name="title"] {
+    height: 30px;
+    width: 100%;
+    padding-right: 40px;
+    background-color: #cccccc;
+    font-weight: normal;
+    font-size: 24px;
+    padding-top: 2px;
+    padding-left: 6px;
+    color: #093062;
+
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+#popup img[src="img/close.png"] {
+    width: auto;
+    height: 50px;
+    position: absolute;
+    right: -10px;
+    top: -7px;
+}
+
+#popup [name="data"] {
+    box-sizing: border-box;
+    width: calc(100% - 10px);
+    height: calc(100% - 30px - 10px);
+    border: 2px solid black;
+    margin: 5px;
+    padding: 5px;
+}
+
+#popup [name="name"] {
+    box-sizing: border-box;
+    width: calc(100% - 20px);
+    height: 70px;
+    padding: 10px;
+    border: 2px solid black;
+    color: white;
+    background-color: #41994e;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    vertical-align: center;
+    horiz-align: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#popup [name="alq-div"] {
+    text-align: center;
+    font-size: 18px;
+}
+
+#popup table {
+    width: 70%;
+    margin: 0 auto;
+    height: auto;
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#popup table img {
+    display: inline-block;
+    width: 22px;
+    height: 24px;
+}
+
+#popup table tr {
+    width: 100%;
+}
+
+#popup table tr:first-child {
+    width: 60%;
+}
+
+#popup table tr:last-child {
+    width: 40%;
+}
+
+#popup [name="hip-div"] {
+    text-align: center;
+    font-size: 18px;
+}

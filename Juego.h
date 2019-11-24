@@ -13,19 +13,28 @@
 #include "Dado.h"
 #include "User.h"
 #include "Tablero.h"
+#include "Carta.h"
 using namespace std;
 
 class Juego {
 
 public:
     void inicio();
-    void registrar_jugadores(int no_de_jugadores);
-
+    void registrar_jugadores();
+    void juego();
+    void Cartas();
+    Juego();
+    void CHANCE(int);
+    void COMUNITY_CHEST(int);
+    int Generar_numero_aleatorio_para_cartas(int, int);
 
 private:
     vector<User> jugadores;
+    vector<Carta> cartas;
     Tablero tabla;
     Dado dado1, dado2;
+    int numero_de_jugadores;
+
 
 };
 
