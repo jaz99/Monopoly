@@ -64,3 +64,11 @@ void User::comprar_propieda(Carta_de_propiedad card) {
 int User::get_User_ID() {
     return this->ID;
 }
+
+Carta_de_propiedad User::get_Carta_de_propiedad(int posicion_de_propiedad) {
+    for (int i = 0; i < mis_propiedades.size(); ++i) {
+        if (mis_propiedades[i].get_posicion() == posicion_de_propiedad) {
+            return mis_propiedades[i];
+        }
+    }
+}

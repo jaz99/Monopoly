@@ -20,15 +20,18 @@ using namespace std;
 class Juego {
 
 public:
+
+    int Generar_numero_aleatorio_para_cartas(int, int);
     void inicio();
     void registrar_jugadores();
     void juego();
     void Cartas();
     void Cartas_de_propiedades();
     Juego();
-    void CHANCE(int);
-    void COMUNITY_CHEST(int);
-    int Generar_numero_aleatorio_para_cartas(int, int);
+    void CHANCE();
+    void COMUNITY_CHEST();
+    void COMPRAR();
+    void RENTAR();
 
 private:
     vector<User> jugadores;
@@ -37,6 +40,8 @@ private:
     Tablero tabla;
     Dado dado1, dado2;
     int numero_de_jugadores;
+    int estado_actual;
+    int i; //variable que indicara el turno del participante (jugador 0, jugador 1, jugador 2 o jugador 3)
 
 
 

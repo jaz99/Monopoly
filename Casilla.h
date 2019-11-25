@@ -20,7 +20,7 @@ public:
     void set_posicion(int i);
     string get_color();
     int get_posicion();
-    void set_numero_de_casas(int n);
+    void incrementar_numero_de_casas(int n);
     int get_numero_de_casas();
     void mostrar_datos();
     long get_precio_de_propiedad();
@@ -28,6 +28,8 @@ public:
     void set_Nombre_de_propietario(string name);
     int get_ID_de_propietario();
     void set_ID_de_propietario(int ID);
+    bool get_renta_de_hotel();
+    void set_compra_de_hotel();
    // Casilla(string color, int pos, string color);
     Casilla(string nombre, int pos, long precio);
     Casilla();
@@ -36,11 +38,12 @@ private:
     string color;
     int posicion;
     string nombre;
-    int numero_de_casas;
-    bool hotel;
+    int numero_de_casas = 0;
+    bool hotel = false ;
     long precio;
     string propietario = " ";
     int ID_de_propietario;
+    int numero_real_de_casas = 0;
 
 };
 

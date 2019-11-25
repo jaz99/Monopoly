@@ -23,7 +23,7 @@ string Casilla::get_color() {
 Casilla::Casilla(string nombre, int pos, long precio) {
     this->nombre = nombre;
     this->posicion = pos;
-    this->numero_de_casas = 0;
+   // this->numero_de_casas = 0;
     this->precio = precio;
     this->propietario = "Ninguno";
 }
@@ -40,12 +40,14 @@ string Casilla::get_nombre() {
     return nombre;
 }
 
-void Casilla::set_numero_de_casas(int n) {
-this->numero_de_casas = n;
+void Casilla::incrementar_numero_de_casas(int n) {
+    numero_de_casas = numero_de_casas + n;
+    numero_real_de_casas = numero_de_casas;
+
 }
 
 int Casilla::get_numero_de_casas() {
-    return numero_de_casas;
+    return numero_real_de_casas;
 }
 
 void Casilla::mostrar_datos() {
@@ -70,5 +72,13 @@ int Casilla::get_ID_de_propietario() {
 
 void Casilla::set_ID_de_propietario(int ID) {
     this->ID_de_propietario = ID;
+}
+
+bool Casilla::get_renta_de_hotel() {
+    return hotel;
+}
+
+void Casilla::set_compra_de_hotel() {
+    this->hotel = true;
 }
 

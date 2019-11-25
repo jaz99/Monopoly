@@ -40,21 +40,19 @@ Juego::Juego() {
 void Juego::juego() {
 
     int contador = 0;
-    int d1, d2, casilla_nueva, estado_act;
-    Casilla cas_aux;
-    string compra;
+    int d1, d2, casilla_nueva;
+    Casilla cas_aux;//usada para el control de
 
-    while(1){
-        for (int i = 0; i < numero_de_jugadores ; ++i) {
 
+    while(true){
+        for (int jugador = 0; jugador < numero_de_jugadores ; ++jugador) {
+            i = jugador;
             cout << jugadores[i].get_nombre() << " con " << jugadores[i].get_Dinero_de_usuario() << " tira dados" << endl;
-
-
             //El utuario tira los dados
             d1 = dado1.tirar_dado();
             d2 = dado2.tirar_dado();
-            cout << "Total: " << (d1+d2) << " ";
-            sleep(1.5);
+            cout << "Total: " << (d1+d2) << " " << endl;
+            sleep(.5);
             casilla_nueva = (jugadores[i].get_estado_actual()).get_posicion() + (d1+d2);
 
 
@@ -69,90 +67,184 @@ void Juego::juego() {
             cas_aux = tabla.get_casilla((casilla_nueva));
             //Muestra el estado actual de los jugadores
             jugadores[i].set_estado_actual(cas_aux);
-            estado_act = jugadores[i].get_estado_actual().get_posicion();
+            cout << "El jugador " << jugadores[i].get_nombre() << " se encuentra en " << (jugadores[i].get_estado_actual()).get_nombre() << " " << (jugadores[i].get_estado_actual()).get_posicion() << endl;
+            estado_actual = jugadores[i].get_estado_actual().get_posicion();
+
+
 
             ///////////////////////////////////////////////////////////COMPRAAAAASSSSSS////////////////////////////////////////////////////////////
-            if(jugadores[i].puede_comprar() == true && tabla.get_casilla(estado_act).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_act).get_Nombre_de_propietario() == "Ninguno"){
+                COMPRAR();// se evalua si la casilla tiene dueño, sino se oferta al jugador que tiro y llego a esa casilla, en caso
+                          // de que no la quiera el jugador, se seguira ofertando al siguiente jugador que caiga en ella
 
-            cout << "Deseas comprar la propiedad: " << (jugadores[i].get_estado_actual()).get_nombre() << " costo: $" << tabla.get_casilla(estado_act).get_precio_de_propiedad() << endl;
-            cout << "s " << "para comprar" << "n " << "para rechazar" << endl;
-            cin >> compra;
-            if(compra == "s" || compra == "s"){
-                jugadores[i].comprar_propieda(cartas_de_propiedades[jugadores[i].get_estado_actual().get_posicion()]);
-
-                cartas_de_propiedades[estado_act].set_nombre_de_propietario(jugadores[i].get_nombre());
-                cartas_de_propiedades[estado_act].set_ID_de_propietario(jugadores[i].get_User_ID());
-                tabla.set_nombre_de_propietario(estado_act, jugadores[i].get_nombre());
-                tabla.set_ID_de_propietario(estado_act, jugadores[i].get_User_ID());
-
-                cout << tabla.get_casilla(estado_act).get_Nombre_de_propietario() << tabla.get_casilla(estado_act).get_ID_de_propietario() << endl;
-            }
-            }
+            ///////////////////////////////////////////////////////////RENTAAASSSS////////////////////////////////////////////////////////////
+                 RENTAR();//le quita dinero al usuario que cae en la casilla actual y tiene dueño, el costo de la renta varie entre cuantas casas tiene y si tiene hotel.
 
             ///////////////////////////////////////////////////////////CARTAS CHANCE Y CARTAS COMUNITY CHEST//////////////////////////////////////
-            if((jugadores[i].get_estado_actual()).get_posicion() == 7 || (jugadores[i].get_estado_actual()).get_posicion() == 22 || (jugadores[i].get_estado_actual()).get_posicion() == 36){
-                CHANCE(i);
-            }
-            if((jugadores[i].get_estado_actual()).get_posicion() == 2 || (jugadores[i].get_estado_actual()).get_posicion() == 17 || (jugadores[i].get_estado_actual()).get_posicion() == 33){
-                COMUNITY_CHEST(i);
-            }
+                CHANCE();
+                COMUNITY_CHEST();
 
-            cout << (jugadores[i].get_estado_actual()).get_nombre() << " " << (jugadores[i].get_estado_actual()).get_posicion() << endl;
-            sleep(4);
+
+
+            sleep(.5);
             contador++;
         }
     }
 
 }
 
-///////////////////////////////////////////////////////////////////CHANCE(CARD)//////////////////////////////////////
-void Juego::CHANCE(int i){
+///////////////////////////////////////////////////////COMPRASSSSS//////////////////////////////////////////////////////
+
+void Juego::COMPRAR() {
+    char compra;
+    if(jugadores[i].puede_comprar() == true && tabla.get_casilla(estado_actual).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_actual).get_Nombre_de_propietario() == "Ninguno"){
+
+        cout << "Deseas comprar la propiedad: " << (jugadores[i].get_estado_actual()).get_nombre() << " costo: $" << tabla.get_casilla(estado_actual).get_precio_de_propiedad() << endl;
+        cout << "s " << "para comprar" << "n " << "para rechazar" << endl;
+        //cin >> compra;
+            switch ('s'){
+                case 'S':
+                    jugadores[i].comprar_propieda(cartas_de_propiedades[jugadores[i].get_estado_actual().get_posicion()]);
+
+                    cartas_de_propiedades[estado_actual].set_nombre_de_propietario(jugadores[i].get_nombre());
+                    cartas_de_propiedades[estado_actual].set_ID_de_propietario(jugadores[i].get_User_ID());
+                    tabla.set_nombre_de_propietario(estado_actual, jugadores[i].get_nombre());
+                    tabla.set_ID_de_propietario(estado_actual, jugadores[i].get_User_ID());
+
+                    cout << tabla.get_casilla(estado_actual).get_Nombre_de_propietario() << tabla.get_casilla(estado_actual).get_ID_de_propietario() << endl;
+                    break;
+                case 's':
+                    jugadores[i].comprar_propieda(cartas_de_propiedades[jugadores[i].get_estado_actual().get_posicion()]);
+
+                    cartas_de_propiedades[estado_actual].set_nombre_de_propietario(jugadores[i].get_nombre());
+                    cartas_de_propiedades[estado_actual].set_ID_de_propietario(jugadores[i].get_User_ID());
+                    tabla.set_nombre_de_propietario(estado_actual, jugadores[i].get_nombre());
+                    tabla.set_ID_de_propietario(estado_actual, jugadores[i].get_User_ID());
+
+                    cout << tabla.get_casilla(estado_actual).get_Nombre_de_propietario() << tabla.get_casilla(estado_actual).get_ID_de_propietario() << endl;
+                    break;
+                case 'N':
+                    break;
+                case 'n':
+                    break;
+            }
+
+    } else if(jugadores[i].puede_comprar() == true && tabla.get_casilla(estado_actual).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_actual).get_Nombre_de_propietario() ==  jugadores[i].get_nombre() && tabla.get_casilla(estado_actual).get_numero_de_casas() < 4){
+        cout << "Deseas comprar una casa?" << endl;
+        char eleccion;
+       cin >> eleccion;
+        switch (eleccion){
+        case 's': case 'S':
+            tabla.get_casilla(estado_actual).incrementar_numero_de_casas(1);
+                cout << "El costo en " << tabla.get_casilla(estado_actual).get_nombre() << " es de " << cartas_de_propiedades[estado_actual].get_precio_de_casa() << endl;
+                        jugadores[i].restar_Dinero_de_usuario( cartas_de_propiedades[estado_actual].get_precio_de_casa()*(-1));
+
+                        cout << tabla.get_casilla(estado_actual).get_numero_de_casas() << " " << jugadores[i].get_nombre() << " " << jugadores[i].get_Dinero_de_usuario() << endl;
+                break;
+
+        }
+     //sleep(3);
+    } else if(jugadores[i].puede_comprar() == true && tabla.get_casilla(estado_actual).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_actual).get_Nombre_de_propietario() ==  jugadores[i].get_nombre() && tabla.get_casilla(estado_actual).get_numero_de_casas() == 4){
+        cout << "Deseas comprar un hotel?" << endl;
+    }
+}
+
+/////////////////////////////////////////////////////////////////RENTAS/////////////////////////////////////////////////
+void Juego::RENTAR() {
+    Casilla auxiliar;
+
+    int n_de_casas;
+    long precio_de_propiedad;
+    int renta;
+    if(tabla.get_casilla(estado_actual).get_precio_de_propiedad() != 0 && tabla.get_casilla(estado_actual).get_Nombre_de_propietario() != "Ninguno" && tabla.get_casilla(estado_actual).get_Nombre_de_propietario() != jugadores[i].get_nombre()){
+        auxiliar = tabla.get_casilla(estado_actual);
+            if(!auxiliar.get_renta_de_hotel()) {
+
+                n_de_casas = auxiliar.get_numero_de_casas();
+                precio_de_propiedad = auxiliar.get_precio_de_propiedad();
+                renta = jugadores[auxiliar.get_ID_de_propietario()].get_Carta_de_propiedad(estado_actual).get_renta_por_casa(n_de_casas, precio_de_propiedad);
+
+                cout << auxiliar.get_nombre() << " Propiedad de " << auxiliar.get_Nombre_de_propietario() << " con "
+                     << tabla.get_casilla(estado_actual).get_numero_de_casas() << " casas. " << "Consto de la renta: " << renta << endl;
+
+                renta = renta * (-1);
+                jugadores[i].restar_Dinero_de_usuario(renta);
+                cout << jugadores[i].get_nombre() << " " << jugadores[i].get_Dinero_de_usuario() << endl;
+                renta = renta * (-1);
+                jugadores[auxiliar.get_ID_de_propietario()].sumar_Dinero_de_usuario(renta);
+                cout << jugadores[auxiliar.get_ID_de_propietario()].get_nombre() << " " << jugadores[auxiliar.get_ID_de_propietario()].get_Dinero_de_usuario() << endl;
+
+            } else if(auxiliar.get_renta_de_hotel()){
+
+                renta = jugadores[auxiliar.get_ID_de_propietario()].get_Carta_de_propiedad(estado_actual).get_renta_de_casas_y_hotel();
+
+                cout << auxiliar.get_nombre() << " Propiedad de " << auxiliar.get_Nombre_de_propietario() << " con "
+                     << auxiliar.get_numero_de_casas() << " casas y hotel. " << "Consto de la renta: " << renta << endl;
+
+                renta = renta * (-1);
+                jugadores[i].restar_Dinero_de_usuario(renta);
+                cout << jugadores[i].get_nombre() << " " << jugadores[i].get_Dinero_de_usuario() << endl;
+                renta = renta * (-1);
+                jugadores[auxiliar.get_ID_de_propietario()].sumar_Dinero_de_usuario(renta);
+                cout << jugadores[auxiliar.get_ID_de_propietario()].get_nombre() << " " << jugadores[auxiliar.get_ID_de_propietario()].get_Dinero_de_usuario() << endl;
+
+            }
+
+    }
+}
+
+///////////////////////////////////////////////////////////////////CHANCE(CARD)/////////////////////////////////////////
+void Juego::CHANCE(){
     int dinero;
     int numero_de_carta = Generar_numero_aleatorio_para_cartas(0,13);
+    if((jugadores[i].get_estado_actual()).get_posicion() == 7 || (jugadores[i].get_estado_actual()).get_posicion() == 22 || (jugadores[i].get_estado_actual()).get_posicion() == 36) {
 
-    cout << "\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t CHANCE" << endl;
+        cout << "\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t CHANCE" << endl;
 
-    cout << cartas[numero_de_carta].get_Regla() << endl;
+        cout << cartas[numero_de_carta].get_Regla() << endl;
 
-    //Se da dinero al usuario
-    if(numero_de_carta >= 00 && numero_de_carta <= 5){
-        dinero = cartas[numero_de_carta].get_Dinero();
-        jugadores[i].sumar_Dinero_de_usuario(dinero);
+        //Se da dinero al usuario
+        if (numero_de_carta >= 00 && numero_de_carta <= 5) {
+            dinero = cartas[numero_de_carta].get_Dinero();
+            jugadores[i].sumar_Dinero_de_usuario(dinero);
+        }
+
+        //Se quita dinero al usuario
+        if (numero_de_carta > 5 && numero_de_carta <= 13) {
+            dinero = cartas[numero_de_carta].get_Dinero();
+            jugadores[i].restar_Dinero_de_usuario(dinero);
+        }
+
+        cout << "\n\n\n\n" << endl;
+        sleep(.5);
     }
-
-    //Se quita dinero al usuario
-    if(numero_de_carta > 5 && numero_de_carta <= 13){
-        dinero = cartas[numero_de_carta].get_Dinero();
-        jugadores[i].restar_Dinero_de_usuario(dinero);
-    }
-
-    cout << "\n\n\n\n" << endl;
-    sleep(5);
 
 }
 
 ///////////////////////////////////////////////////////////////////COMUNITY_CHEST(CARD)//////////////////////////////////////
-void Juego::COMUNITY_CHEST(int i){
+void Juego::COMUNITY_CHEST(){
     int dinero;
     int numero_de_carta = Generar_numero_aleatorio_para_cartas(14,21);
-    cout << "\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t COMUNITY CHEST" << endl;
+    if((jugadores[i].get_estado_actual()).get_posicion() == 2 || (jugadores[i].get_estado_actual()).get_posicion() == 17 || (jugadores[i].get_estado_actual()).get_posicion() == 33) {
+        cout << "\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\t COMUNITY CHEST" << endl;
 
-    cout << cartas[numero_de_carta].get_Regla() << endl;
+        cout << cartas[numero_de_carta].get_Regla() << endl;
 
-    //Retrocede casillas
-    if(numero_de_carta >= 14 && numero_de_carta <= 18){
-        int retroceso = (jugadores[i].get_estado_actual()).get_posicion() - cartas[numero_de_carta].get_Casillas_a_avanzar_o_retoceder();
-        jugadores[i].set_estado_actual(tabla.get_casilla(retroceso));
+        //Retrocede casillas
+        if (numero_de_carta >= 14 && numero_de_carta <= 18) {
+            int retroceso = (jugadores[i].get_estado_actual()).get_posicion() -
+                            cartas[numero_de_carta].get_Casillas_a_avanzar_o_retoceder();
+            jugadores[i].set_estado_actual(tabla.get_casilla(retroceso));
+        }
+
+        //Se va a la carcel
+        if (numero_de_carta > 18 && numero_de_carta <= 21) {
+            jugadores[i].set_estado_actual(tabla.get_casilla(10));
+        }
+
+        cout << "\n\n\n\n" << endl;
+        sleep(.5);
+
     }
-
-    //Se va a la carcel
-    if(numero_de_carta > 18 && numero_de_carta <= 21){
-        jugadores[i].set_estado_actual(tabla.get_casilla(10));
-    }
-
-    cout << "\n\n\n\n" << endl;
-    sleep(5);
-
 
 }
 
@@ -303,9 +395,12 @@ void Juego::Cartas_de_propiedades() {
         //}
     }
 
-    for (int j = 0; j < 28 ; ++j) {
-        cout << cartas_de_propiedades[j].get_nombre() << " " << cartas_de_propiedades[j].get_color() << " " << cartas_de_propiedades[j].get_precio_de_propiedad() << endl;
-    }
+   /* for (int j = 0; j < 28 ; ++j) {
+        cout << cartas_de_propiedades[j].get_nombre() << " " << cartas_de_propiedades[j].get_color() << " " << cartas_de_propiedades[j].get_precio_de_propiedad() << " " << cartas_de_propiedades[j].get_precio_de_propiedad() << endl;
+    }*/
 
 
 }
+
+
+

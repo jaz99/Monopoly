@@ -30,6 +30,7 @@ public:
     void ya_puede_comprar();
     void comprar_propieda(Carta_de_propiedad card);
     int get_User_ID();
+    Carta_de_propiedad get_Carta_de_propiedad(int posicion_de_propiedad);
     User(Casilla cas, string name, int ID);
 
 private:

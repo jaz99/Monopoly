@@ -20,19 +20,24 @@ private:
     long precio;
     string propietario;
     int ID_de_propietario;
+    int precio_de_cada_casa = 75;
 
 public:
     Carta_de_propiedad(string nombre, string color, int posicion, long precio);
+    Carta_de_propiedad();
     string get_nombre();
     string get_color();
     int get_posicion();
     string get_nombre_de_propietario();
     int get_ID_de_propietario();
     long get_precio_de_propiedad();
-    int get_costo_de_casas_y_hotel();
-
+    int get_renta_de_casas_y_hotel();
+    int get_renta_sin_casas();
+    long get_renta_por_casa(int n, long p);
     void set_nombre_de_propietario(string name);
     void set_ID_de_propietario(int i);
+    int get_precio_de_casa();
+
 };
 
 
