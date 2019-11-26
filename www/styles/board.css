@@ -48,6 +48,10 @@ h1 {
  * Add the correct display in IE 9-.
  * 1. Add the correct display in IE.
  */
+.centrar {
+text-align: center;
+}
+
 figcaption,
 figure,
 main {
